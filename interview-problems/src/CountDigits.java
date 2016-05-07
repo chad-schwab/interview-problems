@@ -10,6 +10,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
+/**
+ * How many times would each digit (0-9) show up if you counted from one to the current Unix epoch? Write a program that will give the answers to the above. It
+ * should take in an optional timestamp. If one is given, use it to do the above calculation. If none is given, assume local time.
+ *
+ *
+ * Ex: If you counted from 1 to 20 the digit 1 shows up 12 times, the digit 2 shows up 3 times and the digit 3 shows up 2 times.
+ *
+ * @author Chad
+ */
 public class CountDigits
 {
 	public static void main(String[] args)

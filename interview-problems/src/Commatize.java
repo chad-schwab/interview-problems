@@ -2,6 +2,11 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Takes in an arbitrarily long “number” and return it formatted with commas. 
+ * 
+ * @author Chad
+ */
 public class Commatize
 {
 	public static void main(String[] args)

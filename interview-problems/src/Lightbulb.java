@@ -1,6 +1,12 @@
 
 /**
- * 2 Cell phones, 1 building, n levels.
+ * I've seen this question phrased with lightbulbs and cell phones. To spice it up a bit, I'm going to explain it in terms of bio-engineered chickens.
+ *
+ * Goal: Given two egg producing chickens and a building with x number floors, minimize the (worst case) number of tests to see how far an egg can be dropped
+ * before breaking. When an egg breaks the chicken that produced it becomes angry and flies away.
+ * 
+ * Bonus points: minimized the expected value of drops.
+ *
  * @author Chad
  */
 public class Lightbulb
@@ -51,11 +57,11 @@ public class Lightbulb
 		{
 			if (arg.equalsIgnoreCase("--help") || arg.equalsIgnoreCase("-h"))
 			{
-				System.out.println("\nThis program finds the optimal plan for testing the durability of cell phones. Given two phones and a building with a set "
+				System.out.println("\nThis program finds the optimal plan for testing the durability of genetically modified chicken eggs. Given two chickens and a building with a set "
 								   + " number of floors (position argument 1) we can devise a strategy to minimize the number of drops in the best and worst case.\n"
-								   + "Since we're trying to minimize the worst case and we know the worst case would be for the cell phone to break "
+								   + "Since we're trying to minimize the worst case and we know the worst case would be for the chicken egg to break "
 										   + "on the first floor after a large skip in floors, we can reasonably discern we're looking for a consistent skip in floors.\n"
-								   + "Since we're trying to optimize the best case we need to make sure the phone not breaking doesn't require more drops than the phone breaking on the first drop. \n"
+								   + "Since we're trying to optimize the best case we need to make sure the egg not breaking doesn't require more drops than the egg breaking on the first drop. \n"
 								   + " positional arguments:\n"
 										   + "1.           the number of floors\n"
 										   + "\n"
