@@ -5,7 +5,7 @@
  * Goal: Given two egg producing chickens and a building with x number floors, minimize the (worst case) number of tests to see how far an egg can be dropped
  * before breaking. When an egg breaks the chicken that produced it becomes angry and flies away.
  * 
- * Bonus points: minimized the expected value of drops.
+ * Bonus polongs: minimized the expected value of drops.
  *
  * @author Chad
  */
@@ -30,7 +30,7 @@ public class Lightbulb
 	 * @param numFloors
 	 * @return
 	 */
-	private static TestStrategy createOptimalTestStrategy(int numFloors)
+	private static TestStrategy createOptimalTestStrategy(long numFloors)
 	{
 		if (numFloors == 0)
 			return null;
@@ -38,11 +38,11 @@ public class Lightbulb
 			return new TestStrategy(numFloors, 1, null);
 		TestStrategy currentOptimalStrategy = null;
 		//heuristic...sqrt is the sweet spot between case first test fails and worst case all succeed.
-		for (int floorsBetweenTests = (int) Math.floor(Math.pow(numFloors, .4)); floorsBetweenTests <= Math.ceil(Math.pow(numFloors, .6)); floorsBetweenTests++)
+		for (long floorsBetweenTests = (long) Math.floor(Math.pow(numFloors, .4)); floorsBetweenTests <= Math.ceil(Math.pow(numFloors, .6)); floorsBetweenTests++)
 		{
-			int remainderFloors = numFloors % floorsBetweenTests;
-			int floorsBeforeRemainder = numFloors - remainderFloors;
-			int numTestsBeforeRemainder = floorsBeforeRemainder / floorsBetweenTests;
+			long remainderFloors = numFloors % floorsBetweenTests;
+			long floorsBeforeRemainder = numFloors - remainderFloors;
+			long numTestsBeforeRemainder = floorsBeforeRemainder / floorsBetweenTests;
 			TestStrategy remainderStrategy = createOptimalTestStrategy(remainderFloors);
 			TestStrategy testingStrategy = new TestStrategy(floorsBetweenTests, numTestsBeforeRemainder, remainderStrategy);
 			if (testingStrategy.betterThan(currentOptimalStrategy))
@@ -93,31 +93,31 @@ public class Lightbulb
 
 	private static class TestStrategy
 	{
-		private final int floorsBetweenTests;
-		private final int numTestsBeforeRemainder;
+		private final long floorsBetweenTests;
+		private final long numTestsBeforeRemainder;
 		private final TestStrategy remainderStrategy;
 		private Double lazyExpectedValue;
 
-		public TestStrategy(int floorsBetweenTests, int numTestsBeforeRemainder, TestStrategy remainderStrategy)
+		public TestStrategy(long floorsBetweenTests, long numTestsBeforeRemainder, TestStrategy remainderStrategy)
 		{
 			this.floorsBetweenTests = floorsBetweenTests;
 			this.numTestsBeforeRemainder = numTestsBeforeRemainder;
 			this.remainderStrategy = remainderStrategy;
 		}
 
-		public int calculateWorstCase()
+		public long calculateWorstCase()
 		{
 			return Math.max(calculateCaseLastTestBreaks(),
 							calculateCaseMyTestSucceed() + (remainderStrategy == null ? 0 : remainderStrategy.calculateWorstCase()));
 		}
 
-		private int calculateCaseLastTestBreaks()
+		private long calculateCaseLastTestBreaks()
 		{
 			return numTestsBeforeRemainder //all tests succeed until the last one
 						   + floorsBetweenTests - 1; // count up from the last known good to this one
 		}
 
-		private int calculateCaseMyTestSucceed()
+		private long calculateCaseMyTestSucceed()
 		{
 			return numTestsBeforeRemainder;
 		}
@@ -137,8 +137,8 @@ public class Lightbulb
 		{
 			if (lazyExpectedValue == null)
 			{
-				int sum = 0;
-				int count = 0;
+				long sum = 0;
+				long count = 0;
 				TestStrategy currentStrategy = this;
 				while (currentStrategy != null)
 				{
@@ -146,9 +146,9 @@ public class Lightbulb
 					sum += currentStrategy.numTestsBeforeRemainder;
 					count += 1;
 					//capture test fail cases
-					for (int breakingTest = 1; breakingTest <= currentStrategy.numTestsBeforeRemainder; breakingTest++)
+					for (long breakingTest = 1; breakingTest <= currentStrategy.numTestsBeforeRemainder; breakingTest++)
 					{
-						for (int finalBreakingTest = 1; finalBreakingTest < currentStrategy.floorsBetweenTests; finalBreakingTest++)
+						for (long finalBreakingTest = 1; finalBreakingTest < currentStrategy.floorsBetweenTests; finalBreakingTest++)
 						{
 							sum += breakingTest + finalBreakingTest;
 							count++;
